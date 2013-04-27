@@ -1,8 +1,13 @@
 #include <iostream>
 #include <list>
 
+#include "main.h"
+
 #include "Entity.h"
 #include "Player.h"
+#include "Tile.h"
+#include "Camera.h"
+#include "LevelLoader.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -15,17 +20,28 @@ list<Entity*> entities;
 
 int main(int argc, char** argv) {
     RenderWindow window(VideoMode(640, 480), "minimalism");
-    //View view(Vector2f(0, 0), Vector2f(320, 240));
     
     // initialize objects
-    entities.push_back(new Player());
+    entities.push_back(new LevelLoader("data/level1.txt"));
+    
+    //window.UseVerticalSync(true);
+    window.SetFramerateLimit(60);
+    window.SetPosition((VideoMode::GetDesktopMode().Width/2)-320, (VideoMode::GetDesktopMode().Height/2)-240);
     
     while (window.IsOpened()) {
         Event event;
+        float delta = window.GetFrameTime();
 
         while (window.GetEvent(event)) {
             if (event.Type == Event::Closed) {
                 window.Close();
+                clearEntities();
+            }
+            
+            for (auto itr = entities.begin(); itr != entities.end(); itr++) {
+                if ((*itr)->handlesevents) {
+                    (*itr)->event(event);
+                }
             }
         }
 
@@ -36,7 +52,7 @@ int main(int argc, char** argv) {
                 continue;
             }
             
-            (*itr)->step(window.GetFrameTime());
+            (*itr)->step(delta);
 
             if ((*itr)->removeme) {
                 entities.erase(itr);
@@ -46,15 +62,36 @@ int main(int argc, char** argv) {
         }
         
         window.Clear();
-	//window.SetView(view);
-
+        
         for (auto itr = entities.begin(); itr != entities.end(); itr++) {
             (*itr)->draw(window);
         }
         
-        window.Draw(Shape::Rectangle(Vector2f(0, 0), Vector2f(32, 32), Color(255, 0, 0)));
-
         window.Display();
     }
     return EXIT_SUCCESS;
+}
+
+std::list< Entity * > getEntities(std::function< bool(Entity*) > predicate) {
+    std::list<Entity*> ret;
+    
+    for (auto itr = entities.begin(); itr != entities.end(); itr++) {
+        if (!(*itr)->removeme && predicate(*itr)) {
+            ret.push_back(*itr);
+        }
+    }
+    
+    return ret;
+}
+
+Entity* getEntity(std::function< bool(Entity*) > predicate) {
+    for (auto itr = entities.begin(); itr != entities.end(); itr++) {
+        if (!(*itr)->removeme && predicate(*itr)) {
+            return *itr;
+        }
+    }
+}
+
+void clearEntities(void) {
+    entities.remove_if([](Entity* arg) { delete arg; return true; });
 }
