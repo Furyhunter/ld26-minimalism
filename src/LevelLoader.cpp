@@ -6,6 +6,7 @@
 #include "Tile.h"
 #include "Player.h"
 #include "main.h"
+#include "Spring.h"
 
 using namespace std;
 using namespace sf;
@@ -40,6 +41,31 @@ void LevelLoader::step(float d) {
         if (type == "Player") {
             file >> pos.x >> pos.y;
             entities.push_back(new Player(pos));
+        }
+        
+        if (type == "Spring") {
+            Direction dir;
+            int in;
+            
+            file >> pos.x >> pos.y;
+            file >> in;
+            
+            switch (in) {
+            case 0:
+                dir = Direction::Up;
+                break;
+            case 1:
+                dir = Direction::Down;
+                break;
+            case 2:
+                dir = Direction::Left;
+                break;
+            case 3:
+                dir = Direction::Right;
+                break;
+            }
+            
+            entities.push_back(new Spring(pos, dir));
         }
     }
     

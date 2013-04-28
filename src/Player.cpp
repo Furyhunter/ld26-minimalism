@@ -9,6 +9,7 @@
 #include "main.h"
 #include "util.h"
 #include "Camera.h"
+#include "Spring.h"
 
 using namespace sf;
 using namespace std;
@@ -80,6 +81,35 @@ void Player::step(float d) {
         }
     }
     
+    // collide with springs
+    ents = getEntities([](Entity* ent) { return typeid(*ent) == typeid(Spring); });
+    
+    for (auto itr = ents.begin(); itr != ents.end(); itr++) {
+        Vector2f col(0, 0);
+        col = intersect(**itr);
+        
+        if (col.x == 0 && col.y == 0) {
+            // no collision
+            continue;
+        } else {
+            Spring* spring = static_cast<Spring*>(*itr);
+            switch (spring->dir) {
+            case Direction::Up:
+                velocity.y = -512;
+                break;
+            case Direction::Down:
+                velocity.y = 512;
+                break;
+            case Direction::Left:
+                velocity.x = -512;
+                break;
+            case Direction::Right:
+                velocity.x = 512;
+                break;
+            }
+        }
+    }
+    
     if (abs(velocity.y) > 32) {
         grounded = false;
     }
@@ -107,7 +137,7 @@ void Player::event(Event& event) {
         if (event.Key.Code == Key::Z) {
             if (!jumping && grounded) {
                 jumping = true;
-                velocity.y -= PLAYER_JUMP_HEIGHT;
+                velocity.y = -PLAYER_JUMP_HEIGHT;
                 position.y -= 1;
             }
         }

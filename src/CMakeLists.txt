@@ -9,6 +9,7 @@ add_executable(minimalism
     Camera.cpp
     LevelLoader.cpp
     BackgroundA.cpp
+    Spring.cpp
     
     Entity.h
     Player.h
@@ -18,6 +19,8 @@ add_executable(minimalism
     Camera.h
     LevelLoader.h
     BackgroundA.h
+    Spring.h
+    Direction.h
 )
 
 target_link_libraries(minimalism ${SFML_LIBRARIES})

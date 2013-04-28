@@ -22,8 +22,8 @@ void BackgroundA::draw(sf::RenderTarget &target) {
     
     rect = makeRectangle(Vector2f(0, 0), Vector2f(12, 12), Color::White);
     
-    for (x = -320; x < 320; x += 24) {
-        for (y = -240; y < 530; y += 24) {
+    for (x = -320; x < 320; x += 30) {
+        for (y = -240; y < 990; y += 30) {
             rect.SetPosition(offset + Vector2f(x, y));
             rect.SetColor(alternate ? colA : colB);
             target.Draw(rect);

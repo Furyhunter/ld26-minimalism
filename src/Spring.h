@@ -3,15 +3,13 @@
 #include "Entity.h"
 #include "Direction.h"
 
-class Camera : public Entity {
+class Spring : public Entity {
 public:
-    Camera(Entity* target);
+    Spring();
+    Spring(const sf::Vector2f& pos, Direction dir);
     
-    sf::View view;
+    Direction dir;
     
     virtual void step(float d);
     virtual void draw(sf::RenderTarget& target);
-    virtual void event(sf::Event& event);
-    
-    Entity* target;
 };
