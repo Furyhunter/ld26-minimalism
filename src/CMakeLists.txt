@@ -1,4 +1,5 @@
 find_package(SFML REQUIRED COMPONENTS graphics window)
+include_directories(${SFML_INCLUDE_DIR})
 
 add_executable(minimalism
     main.cpp

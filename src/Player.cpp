@@ -14,10 +14,6 @@
 using namespace sf;
 using namespace std;
 
-Player::Player() : Player(Vector2f(32, 32)) {
-    
-}
-
 Player::Player(const Vector2f pos) : Entity(), velocity(0, 0), direction(false), jumping(false), grounded(false) {
     dimensions = Vector2f(32, 32);
     
@@ -44,16 +40,21 @@ void Player::step(float d) {
     list<Entity*> ents;
     
     // apply gravity
-    velocity.y += PLAYER_GRAVITY;
+    velocity.y += PLAYER_GRAVITY * d;
     
     if (velocity.y > PLAYER_TERMINAL_VELOCITY) {
         velocity.y = PLAYER_TERMINAL_VELOCITY;
     }
     
-    if (direction) {
+    if (direction && velocity.x < PLAYER_MOVEMENT_SPEED) {
         velocity.x = PLAYER_MOVEMENT_SPEED;
-    } else {
+    } else if (!direction && velocity.x > -PLAYER_MOVEMENT_SPEED) {
         velocity.x = -PLAYER_MOVEMENT_SPEED;
+    }
+    
+    if (abs(velocity.x) > PLAYER_MOVEMENT_SPEED) {
+        if (velocity.x > 0) velocity.x -= PLAYER_GRAVITY * d;
+        if (velocity.x < 0) velocity.x += PLAYER_GRAVITY * d;
     }
     
     // collide with solids
@@ -102,9 +103,11 @@ void Player::step(float d) {
                 break;
             case Direction::Left:
                 velocity.x = -512;
+                direction = false;
                 break;
             case Direction::Right:
                 velocity.x = 512;
+                direction = true;
                 break;
             }
         }

@@ -3,10 +3,6 @@
 
 using namespace sf;
 
-Spring::Spring() : Spring(Vector2f(0, 0), Direction::Up) {
-    
-}
-
 Spring::Spring(const Vector2f &pos, Direction dir) : Entity(), dir(dir) {
     position = pos;
     
@@ -37,6 +33,14 @@ void Spring::draw(RenderTarget &target) {
     case Direction::Down:
         target.Draw(makeRectangle(position + Vector2f(0, 8), Vector2f(32, 8), col2));
         target.Draw(makeRectangle(position + Vector2f(8, 0), Vector2f(16, 8), col));
+        break;
+    case Direction::Left:
+        target.Draw(makeRectangle(position, Vector2f(8, 32), col2));
+        target.Draw(makeRectangle(position + Vector2f(8, 8), Vector2f(8, 16), col));
+        break;
+    case Direction::Right:
+        target.Draw(makeRectangle(position + Vector2f(8, 0), Vector2f(8, 32), col2));
+        target.Draw(makeRectangle(position + Vector2f(0, 8), Vector2f(8, 16), col));
         break;
     }
 }
