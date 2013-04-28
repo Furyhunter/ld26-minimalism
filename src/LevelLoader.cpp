@@ -9,6 +9,8 @@
 #include "Spring.h"
 #include "Switch.h"
 #include "SwitchedTile.h"
+#include "SmallTile.h"
+#include "AboveTile.h"
 
 using namespace std;
 using namespace sf;
@@ -38,6 +40,11 @@ void LevelLoader::step(float d) {
         if (type == "Tile") {
             file >> pos.x >> pos.y;
             entities.push_back(new Tile(pos));
+        }
+        
+        if (type == "SmallTile") {
+            file >> pos.x >> pos.y;
+            entities.push_back(new SmallTile(pos));
         }
         
         if (type == "Player") {
@@ -86,6 +93,12 @@ void LevelLoader::step(float d) {
             file >> id;
             
             entities.push_back(new SwitchedTile(pos, id));
+        }
+        
+        if (type == "AboveTile") {
+            file >> pos.x >> pos.y;
+            
+            entities.push_back(new AboveTile(pos));
         }
     }
     

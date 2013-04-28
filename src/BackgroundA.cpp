@@ -23,7 +23,7 @@ void BackgroundA::draw(sf::RenderTarget &target) {
     rect = makeRectangle(Vector2f(0, 0), Vector2f(12, 12), Color::White);
     
     for (x = -324; x < 320; x += 20) {
-        for (y = -240; y < 490; y += 20) {
+        for (y = -400; y < 490; y += 20) {
             rect.SetPosition(offset + Vector2f(x, y));
             rect.SetColor(alternate ? colA : colB);
             target.Draw(rect);

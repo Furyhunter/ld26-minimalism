@@ -13,6 +13,8 @@ add_executable(minimalism
     Spring.cpp
     Switch.cpp
     SwitchedTile.cpp
+    SmallTile.cpp
+    AboveTile.cpp
     
     Entity.h
     Player.h
@@ -27,6 +29,8 @@ add_executable(minimalism
     Switch.h
     ISwitchable.h
     SwitchedTile.h
+    SmallTile.h
+    AboveTile.h
 )
 
 target_link_libraries(minimalism ${SFML_LIBRARIES})
