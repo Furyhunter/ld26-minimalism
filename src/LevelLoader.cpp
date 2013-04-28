@@ -4,6 +4,7 @@
 #include <fstream>
 
 #include "Tile.h"
+#include "Player.h"
 #include "main.h"
 
 using namespace std;
@@ -27,23 +28,21 @@ void LevelLoader::step(float d) {
     
     while (file.good()) {
         string type;
+        Vector2f pos;
         
         file >> type;
         
         if (type == "Tile") {
-            Vector2f pos;
             file >> pos.x >> pos.y;
             entities.push_back(new Tile(pos));
         }
         
         if (type == "Player") {
-            Vector2f pos;
             file >> pos.x >> pos.y;
-            entities.push_back(new Tile(pos));
+            entities.push_back(new Player(pos));
         }
     }
     
     file.close();
-    
     remove();
 }

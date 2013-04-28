@@ -16,7 +16,10 @@ public:
     sf::Vector2f dimensions;
     bool removeme;
     bool handlesevents;
+    bool created;
 
+    virtual void create();
+    void createFinalize();
     virtual void step(float delta) = 0;
     virtual void draw(sf::RenderTarget& target) = 0;
     virtual void event(sf::Event& event);

@@ -8,6 +8,7 @@ add_executable(minimalism
     Tile.cpp
     Camera.cpp
     LevelLoader.cpp
+    BackgroundA.cpp
     
     Entity.h
     Player.h
@@ -15,6 +16,8 @@ add_executable(minimalism
     util.h
     Tile.h
     Camera.h
-    LevelLoader.h)
+    LevelLoader.h
+    BackgroundA.h
+)
 
 target_link_libraries(minimalism ${SFML_LIBRARIES})

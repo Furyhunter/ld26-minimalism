@@ -26,6 +26,14 @@ void Entity::removeGroup(Group group) {
     collisionGroups.remove(group);
 }
 
+void Entity::create() {
+
+}
+
+void Entity::createFinalize() {
+    created = true;
+}
+
 void Entity::event(Event &event) {
     
 }

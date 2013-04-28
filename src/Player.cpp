@@ -3,9 +3,12 @@
 #include <iostream>
 #include <list>
 #include <cmath>
+#include <typeinfo>
+#include <functional>
 
 #include "main.h"
 #include "util.h"
+#include "Camera.h"
 
 using namespace sf;
 using namespace std;
@@ -24,11 +27,27 @@ Player::Player(const Vector2f pos) : Entity(), velocity(0, 0), direction(false),
     handlesevents = true;
 }
 
+void Player::create() {
+    Camera* cam;
+    // make me a camera if there isn't one already
+    
+    cam = static_cast<Camera*> (getEntity([](Entity* arg) { return typeid(arg) == typeid(Camera); }));
+    
+    if (cam == nullptr) {
+        cam = new Camera(this);
+        entities.push_back(cam);
+    }
+}
+
 void Player::step(float d) {
     list<Entity*> ents;
     
     // apply gravity
     velocity.y += PLAYER_GRAVITY;
+    
+    if (velocity.y > PLAYER_TERMINAL_VELOCITY) {
+        velocity.y = PLAYER_TERMINAL_VELOCITY;
+    }
     
     if (direction) {
         velocity.x = PLAYER_MOVEMENT_SPEED;
@@ -67,6 +86,14 @@ void Player::step(float d) {
     
     // apply velocity
     position += velocity * d;
+    
+    // side collisions
+    if (position.x > 640 - dimensions.x) {
+        direction = false;
+    }
+    if (position.x < 0) {
+        direction = true;
+    }
 }
 
 void Player::draw(RenderTarget& target) {
