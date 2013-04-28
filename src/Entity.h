@@ -6,12 +6,13 @@
 
 enum class Group : int {
     Solid = 0,
-    Player
+    Player,
+    Switchable
 };
 
 class Entity {
 public:
-    Entity();
+    Entity(const sf::Vector2f& pos);
     sf::Vector2f position;
     sf::Vector2f dimensions;
     bool removeme;

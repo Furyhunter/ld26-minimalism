@@ -11,6 +11,8 @@ add_executable(minimalism
     LevelLoader.cpp
     BackgroundA.cpp
     Spring.cpp
+    Switch.cpp
+    SwitchedTile.cpp
     
     Entity.h
     Player.h
@@ -22,6 +24,9 @@ add_executable(minimalism
     BackgroundA.h
     Spring.h
     Direction.h
+    Switch.h
+    ISwitchable.h
+    SwitchedTile.h
 )
 
 target_link_libraries(minimalism ${SFML_LIBRARIES})

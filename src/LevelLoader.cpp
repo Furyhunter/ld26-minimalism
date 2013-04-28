@@ -7,11 +7,13 @@
 #include "Player.h"
 #include "main.h"
 #include "Spring.h"
+#include "Switch.h"
+#include "SwitchedTile.h"
 
 using namespace std;
 using namespace sf;
 
-LevelLoader::LevelLoader(const char *path) : Entity(), path(path) {
+LevelLoader::LevelLoader(const char *path) : Entity(Vector2f(0, 0)), path(path) {
     
 }
 
@@ -66,6 +68,24 @@ void LevelLoader::step(float d) {
             }
             
             entities.push_back(new Spring(pos, dir));
+        }
+        
+        if (type == "Switch") {
+            int id;
+            
+            file >> pos.x >> pos.y;
+            file >> id;
+            
+            entities.push_back(new Switch(pos, id));
+        }
+        
+        if (type == "SwitchedTile") {
+            int id;
+            
+            file >> pos.x >> pos.y;
+            file >> id;
+            
+            entities.push_back(new SwitchedTile(pos, id));
         }
     }
     

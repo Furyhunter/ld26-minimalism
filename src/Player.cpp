@@ -10,14 +10,13 @@
 #include "util.h"
 #include "Camera.h"
 #include "Spring.h"
+#include "Switch.h"
 
 using namespace sf;
 using namespace std;
 
-Player::Player(const Vector2f pos) : Entity(), velocity(0, 0), direction(false), jumping(false), grounded(false) {
+Player::Player(const Vector2f pos) : Entity(pos), velocity(0, 0), direction(false), jumping(false), grounded(false) {
     dimensions = Vector2f(32, 32);
-    
-    position = pos;
     
     addGroup(Group::Player);
     
@@ -96,20 +95,37 @@ void Player::step(float d) {
             Spring* spring = static_cast<Spring*>(*itr);
             switch (spring->dir) {
             case Direction::Up:
-                velocity.y = -512;
+                velocity.y = -SPRING_HEIGHT;
                 break;
             case Direction::Down:
-                velocity.y = 512;
+                velocity.y = SPRING_HEIGHT;
                 break;
             case Direction::Left:
-                velocity.x = -512;
+                velocity.x = -SPRING_HEIGHT;
                 direction = false;
                 break;
             case Direction::Right:
-                velocity.x = 512;
+                velocity.x = SPRING_HEIGHT;
                 direction = true;
                 break;
             }
+        }
+    }
+    
+    // collide with switches
+    ents = getEntities([](Entity* ent) { return typeid(*ent) == typeid(Switch); });
+    
+    for (auto itr = ents.begin(); itr != ents.end(); itr++) {
+        Vector2f col(0, 0);
+        col = intersect(**itr);
+        
+        if (col.x == 0 && col.y == 0) {
+            // no collision
+            continue;
+        } else {
+            Switch* button = static_cast<Switch*>(*itr);
+            
+            button->activate();
         }
     }
     
@@ -148,9 +164,11 @@ void Player::event(Event& event) {
     
     if (event.Type == Event::KeyReleased) {
         if (event.Key.Code == Key::Z) {
-            if (jumping && velocity.y < 0) {
+            if (jumping && velocity.y < -32) {
                 jumping = false;
                 velocity.y = -32;
+            } else if (jumping) {
+                jumping = false;
             }
         }
     }

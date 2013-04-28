@@ -3,9 +3,7 @@
 
 using namespace sf;
 
-Spring::Spring(const Vector2f &pos, Direction dir) : Entity(), dir(dir) {
-    position = pos;
-    
+Spring::Spring(const Vector2f &pos, Direction dir) : Entity(pos), dir(dir) {
     switch (dir) {
     case Direction::Down:
     case Direction::Up:
@@ -23,7 +21,7 @@ void Spring::step(float d) {
 }
 
 void Spring::draw(RenderTarget &target) {
-    Color col(128, 128, 128);
+    Color col(127, 127, 127);
     Color col2(60, 192, 60);
     switch (dir) {
     case Direction::Up:

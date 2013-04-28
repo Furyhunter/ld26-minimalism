@@ -2,8 +2,7 @@
 
 using namespace sf;
 
-Camera::Camera(Entity *target) : Entity(), target(target), view() {
-    position = Vector2f(0, 0);
+Camera::Camera(Entity *target) : Entity(Vector2f(0, 0)), target(target), view() {
     view.SetHalfSize(Vector2f(320, 240));
     if (target != nullptr) {
         position = target->position;

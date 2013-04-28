@@ -8,6 +8,7 @@
 #define PLAYER_GRAVITY 600
 #define PLAYER_TERMINAL_VELOCITY 512
 #define PLAYER_JUMP_HEIGHT 400
+#define SPRING_HEIGHT 700
 
 class Player : public Entity {
 public:

@@ -2,7 +2,7 @@
 
 using namespace sf;
 
-Entity::Entity() : position(0, 0), dimensions(0, 0), removeme(false), handlesevents(false) {
+Entity::Entity(const Vector2f& pos) : position(pos), dimensions(0, 0), removeme(false), handlesevents(false) {
 
 }
 
