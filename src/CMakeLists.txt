@@ -16,6 +16,7 @@ add_executable(minimalism
     SmallTile.cpp
     AboveTile.cpp
     NextLevel.cpp
+    BackgroundB.cpp
     
     Entity.h
     Player.h
@@ -33,6 +34,7 @@ add_executable(minimalism
     SmallTile.h
     AboveTile.h
     NextLevel.h
+    BackgroundB.h
 )
 
 target_link_libraries(minimalism ${SFML_LIBRARIES})
