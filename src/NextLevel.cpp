@@ -16,7 +16,7 @@ enum class Background {
 Background b = Background::A;
 
 NextLevel::NextLevel(const sf::Vector2f &pos, const char* next) : Entity(pos), time(0), shape(Shape::Circle(Vector2f(0, 0), 16, Color(31, 31, 191))), next(next) {
-    
+    dimensions = Vector2f(32, 32);
 }
 
 void NextLevel::step(float delta) {

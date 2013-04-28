@@ -12,6 +12,7 @@
 #include "SmallTile.h"
 #include "AboveTile.h"
 #include "NextLevel.h"
+#include "EndGameGate.h"
 
 using namespace std;
 using namespace sf;
@@ -108,6 +109,12 @@ void LevelLoader::step(float d) {
             file >> meta;
             
             entities.push_back(new NextLevel(pos, meta.c_str()));
+        }
+        
+        if (type == "EndGameGate") {
+            file >> pos.x >> pos.y;
+            
+            entities.push_back(new EndGameGate(pos));
         }
     }
     

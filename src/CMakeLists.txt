@@ -1,7 +1,7 @@
-find_package(SFML REQUIRED COMPONENTS graphics window)
+find_package(SFML REQUIRED COMPONENTS system graphics window)
 include_directories(${SFML_INCLUDE_DIR})
 
-add_executable(minimalism
+add_executable(minimalism FlashText.cpp EndGameBackground.cpp 
     main.cpp
     Entity.cpp
     Player.cpp
@@ -17,6 +17,7 @@ add_executable(minimalism
     AboveTile.cpp
     NextLevel.cpp
     BackgroundB.cpp
+    EndGameGate.cpp
     
     Entity.h
     Player.h
@@ -35,6 +36,9 @@ add_executable(minimalism
     AboveTile.h
     NextLevel.h
     BackgroundB.h
+    EndGameGate.h
+    EndGameBackground.h
+    FlashText.h
 )
 
 target_link_libraries(minimalism ${SFML_LIBRARIES})
