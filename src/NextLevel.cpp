@@ -53,7 +53,7 @@ void NextLevel::step(float delta) {
 }
 
 void NextLevel::draw(sf::RenderTarget &target) {
-    shape.SetPosition(position);
+    shape.SetPosition(position + Vector2f(16, 16));
     
     target.Draw(shape);
 }
